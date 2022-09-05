@@ -20,13 +20,18 @@ DISPLAY_TITLE = r"""
 """
 
 
-parser = ArgumentParser(description='heuri-rename is a ChRIS ds plugin, which copies files from an input directory to an output directory under different names, similar to pl-bulk-rename, but in a more user-friendly manner using heuristics',
-                        formatter_class=ArgumentDefaultsHelpFormatter)
-parser.add_argument('-n', '--name', default='foo',
-                    help='argument which sets example output file name')
-parser.add_argument('-V', '--version', action='version',
-                    version=f'%(prog)s {__version__}')
-
+parser = argparse.ArgumentParser(description='pl-heuri-rename is a ChRIS ds plugin,'
+                                 'which copies files from an input directory to '
+                                 'an output directory under different names, similar to'
+                                 'pl-bulk-rename, but in a more user-friendly manner using heuristics', formatter_class=ArgumentDefaultsHelpFormatter)
+parser.add_argument('inputdirectory', type=str,
+                    help='required: the input directory')
+parser.add_argument('outputdirectory', type=str,
+                    help='required: the output directory')
+parser.add_argument('-f', '--filetodir', type=str, nargs=1,
+                    help="Filename to dirname: renames directory name to the name of a file.Make sure theres only files in you input directory. Example in/a.dat, in/b.dat to out/a/ChangedName.dat, out/b/ChangedName.dat, e.g pl-heuri-rename /input /output -f ChangedName")
+parser.add_argument('-r', '--restack', action='store_true',
+                    help="Restack directories, e.g ename in/a/b/file.dat, in/1/2/file.dat to out/b/a.dat, out/2/1.dat")
 
 # documentation: https://fnndsc.github.io/chris_plugin/chris_plugin.html#chris_plugin
 @chris_plugin(
@@ -39,9 +44,28 @@ parser.add_argument('-V', '--version', action='version',
 )
 def main(options: Namespace, inputdir: Path, outputdir: Path):
     print(DISPLAY_TITLE)
-
-    output_file = outputdir / f'{options.name}.txt'
-    output_file.write_text('did nothing successfully!')
+    if(args.filetodir):
+      path = str(os.curdir) + args.inputdirectory
+      files = os.listdir(r'{}'.format(path))
+      # Accessing files inside each folder
+      for file in files:
+          outputdirectory = str(os.curdir) + args.outputdirectory
+          mode = 0o770
+          print(outputdirectory)
+          pathf = str(os.curdir) + args.outputdirectory
+          pathfull = os.path.join(pathf, Path(file).stem)
+          print(pathfull)
+          os.mkdir(pathfull, mode)
+          # Getting the file extension
+          extension_pos = file.rfind(".")
+          print(str(extension_pos) + ":extension_pos")
+          extension = file[extension_pos:]
+          print(extension + ":extension")
+          filename = "filename" + Path(file).suffix
+          inputpath = str(os.curdir) + args.inputdirectory
+          pathVar1 = pathfull + "/" + ''.join(args.filetodir)
+          shutil.copy2(os.path.join(inputpath, Path(file)), pathVar1 + extension)
+          print(filename + ":filename")
 
 
 if __name__ == '__main__':
