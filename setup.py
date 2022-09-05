@@ -1,18 +1,18 @@
 from setuptools import setup
 
 setup(
-    name='chris-plugin-template',
+    name='heuri-rename',
     version='1.0.0',
-    description='A ChRIS DS plugin template',
+    description='heuri-rename is a ChRIS ds plugin, which copies files from an input directory to an output directory under different names, similar to pl-bulk-rename, but in a more user-friendly manner using heuristics',
     author='FNNDSC',
     author_email='dev@babyMRI.org',
-    url='https://github.com/FNNDSC/python-chrisapp-template',
-    py_modules=['app'],
+    url='https://github.com/mohelt/heuri-rename',
+    py_modules=['heuri-rename'],
     install_requires=['chris_plugin'],
     license='MIT',
     entry_points={
         'console_scripts': [
-            'commandname = app:main'
+            'heuri-rename = heuri-rename:main'
         ]
     },
     classifiers=[
