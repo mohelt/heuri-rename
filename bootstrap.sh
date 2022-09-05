@@ -8,20 +8,20 @@
 # STEP 1. Change these values to your liking.
 
 PLUGIN_NAME="$(basename $(dirname $(realpath $0)))"  # name of current directory
-PLUGIN_TITLE='My ChRIS Plugin'
-SCRIPT_NAME='commandname'
-DESCRIPTION='A ChRIS plugin to do something awesome'
+PLUGIN_TITLE='heuri-rename'
+SCRIPT_NAME='heuri-rename'
+DESCRIPTION='heuri-rename is a ChRIS ds plugin, which copies files from an input directory to an output directory under different names, similar to pl-bulk-rename, but in a more user-friendly manner using heuristics'
 ORGANIZATION='FNNDSC'
 EMAIL='dev@babyMRI.org'
 
 # Enables automatic testing, building, and release.
 # You are advised to review the file .github/workflows/ci.yml
 # https://github.com/FNNDSC/python-chrisapp-template/wiki/Continuous-Integration#use-ci
-ENABLE_CI=yes
+ENABLE_CI=no
 
 # STEP 2. Uncomment the line below.
 
-#READY=yes
+READY=yes
 
 # STEP 3. Run: ./bootstrap.sh
 
